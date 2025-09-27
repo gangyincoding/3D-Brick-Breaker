@@ -2593,8 +2593,8 @@
             // 设置每种难度的特殊砖块数量
             const specialBrickCounts = {
                 easy: { clone: 1, expand: 1, clear: 1 },
-                medium: { clone: 2, expand: 1, clear: 1 },
-                hard: { clone: 3, expand: 1, clear: 1 }
+                medium: { clone: 3, expand: 2, clear: 1 },
+                hard: { clone: 4, expand: 2, clear: 1 }
             };
 
             gameState.targetSpecialBricks = specialBrickCounts[difficulty];
@@ -2607,29 +2607,33 @@
 
                     // 确定性生成特殊砖块 - 按照策略性位置分配
 
-                    // 分身砖和扩展砖放在前三排，清扫砖放在最后两排
-                    if (row < 3) {
-                        // 前三排：优先放置分身砖和扩展砖
+                    // 特殊砖块策略性位置分配
+                    // 分身砖：主要在中下部位置，尽量最下层
+                    if (row >= rows - 2) {
+                        // 最后两排：优先放置分身砖
                         if (gameState.specialBricksActive.clone < gameState.targetSpecialBricks.clone) {
-                            // 中等和困难模式的第一排一定放一个分身砖
-                            if (row === 0 && (difficulty === 'medium' || difficulty === 'hard')) {
-                                // 第一排选择一个合适的位置放分身砖（避免太靠边）
-                                const firstRowClonePosition = Math.floor(cols * 0.3) + Math.floor(Math.random() * cols * 0.4);
-                                if (col === firstRowClonePosition) {
+                            // 最下层优先放置分身砖
+                            if (row === rows - 1) {
+                                if (Math.random() < 0.7) {
                                     specialType = 'clone';
                                     gameState.specialBricksActive.clone++;
                                 }
-                            } else if (Math.random() < 0.4) {
+                            } else if (Math.random() < 0.5) {
                                 specialType = 'clone';
                                 gameState.specialBricksActive.clone++;
                             }
-                        } else if (gameState.specialBricksActive.expand < gameState.targetSpecialBricks.expand && Math.random() < 0.3) {
+                        }
+                    }
+                    // 扩展砖：主要在中间位置
+                    else if (row >= 1 && row <= rows - 3) {
+                        if (gameState.specialBricksActive.expand < gameState.targetSpecialBricks.expand && Math.random() < 0.6) {
                             specialType = 'expand';
                             gameState.specialBricksActive.expand++;
                         }
-                    } else if (row >= rows - 2) {
-                        // 最后两排：放置清扫砖
-                        if (gameState.specialBricksActive.clear < gameState.targetSpecialBricks.clear && Math.random() < 0.4) {
+                    }
+                    // 清扫砖：主要在上部位置但不是最顶部
+                    else if (row === 1) {
+                        if (gameState.specialBricksActive.clear < gameState.targetSpecialBricks.clear && Math.random() < 0.7) {
                             specialType = 'clear';
                             gameState.specialBricksActive.clear++;
                         }
