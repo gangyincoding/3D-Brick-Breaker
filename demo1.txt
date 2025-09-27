@@ -1,0 +1,31 @@
+
+特殊砖块区域，请恢复这段代码
+
+
+<div class="panel-section">
+  <div class="section-title">✨ 特殊砖块</div>
+  <div class="special-brick-info clone">
+      <div class="brick-icon">👯</div>
+      <div class="brick-details">
+          <div class="brick-name">分身砖</div>
+          <div class="brick-desc">击中后球数量翻倍 (最多4个)</div>
+      </div>
+      <div class="status-indicator status-inactive"></div>
+  </div>
+  <div class="special-brick-info expand">
+      <div class="brick-icon">📏</div>
+      <div class="brick-details">
+          <div class="brick-name">扩展砖</div>
+          <div class="brick-desc">击中后挡板变长</div>
+      </div>
+      <div class="status-indicator status-inactive"></div>
+  </div>
+  <div class="special-brick-info clear">
+      <div class="brick-icon">🧹</div>
+      <div class="brick-details">
+          <div class="brick-name">清扫砖</div>
+          <div class="brick-desc">击中后清除所有砖块（包括特殊砖块）</div>
+      </div>
+      <div class="status-indicator status-inactive"></div>
+  </div>
+</div>
